@@ -43,6 +43,9 @@ io.on('connection', (socket) => {
     io.emit('gameUpdate', {target: game.target, players: game.players});
   });
   socket.on('left', () => {
+    if(game.players[socket.id].x < 50){
+      game.players[socket.id].x = 450;
+    }
     game.players[socket.id].x -= 20;
     io.emit('gameUpdate', {target: game.target, players: game.players});
   });
