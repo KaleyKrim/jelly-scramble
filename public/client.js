@@ -11,13 +11,26 @@ function renderImg(xCoord, yCoord, source){
   img.src = source;
 }
 
-function updateGame(data){
+document.addEventListener('keydown', move);
 
-  renderImg(data.players[socket.id].x, data.players[socket.id].y, "assets/player.png");
+function move(e){
+  switch(e.key){
+    case 'ArrowDown':
+      socket.emit('down');
 
-  renderImg(data.target.x, data.target.y, "assets/watermelon.png");
+  }
+
+}
+
+function updateGame(playerData, targetData){
+  players = playerData;
+  target = targetData;
+  renderImg(playerData[socket.id].x, playerData[socket.id].y, "assets/player.png");
+  renderImg(targetData.x, targetData.y, "assets/watermelon.png");
 }
 
 socket.on('gameUpdate', function(data){
-  updateGame(data);
+  updateGame(data.players, data.target);
 });
+
+setInterval(updateGame(players, target), 20);

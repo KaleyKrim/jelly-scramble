@@ -22,7 +22,13 @@ io.on('connection', (socket) => {
   }
   game.players[socket.id] = {
     x: 250,
-    y: 250
-  }
+    y: 250,
+    points: 0
+  };
+
   io.emit('gameUpdate', {target: game.target, players: game.players})
+
+  socket.on('disconnect', () => {
+    delete game.players[socket.id];
+  });
 });
