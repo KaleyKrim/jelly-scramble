@@ -31,6 +31,11 @@ io.on('connection', (socket) => {
   io.emit('gameUpdate', {target: game.target, players: game.players})
 
   socket.on('up', () => {
+
+    if(game.collisionCheck(game.players[socket.id], game.target)){
+      game.players[socket.id].points += 1;
+      game.shuffleTarget(targetImages[Math.floor(Math.random()*targetImages.length)]);
+    }
     if(game.players[socket.id].y < 50){
       game.players[socket.id].y = 450;
     }
@@ -38,6 +43,11 @@ io.on('connection', (socket) => {
     io.emit('gameUpdate', {target: game.target, players: game.players});
   });
   socket.on('down', () => {
+   if(game.collisionCheck(game.players[socket.id], game.target)){
+      game.players[socket.id].points += 1;
+      game.shuffleTarget(targetImages[Math.floor(Math.random()*targetImages.length)]);
+    }
+
     if(game.players[socket.id].y > 450){
       game.players[socket.id].y = 50;
     }
@@ -45,6 +55,11 @@ io.on('connection', (socket) => {
     io.emit('gameUpdate', {target: game.target, players: game.players});
   });
   socket.on('right', () => {
+    if(game.collisionCheck(game.players[socket.id], game.target)){
+      game.players[socket.id].points += 1;
+      game.shuffleTarget(targetImages[Math.floor(Math.random()*targetImages.length)]);
+    }
+
     if(game.players[socket.id].x > 450){
       game.players[socket.id].x = 50;
     }
@@ -52,6 +67,10 @@ io.on('connection', (socket) => {
     io.emit('gameUpdate', {target: game.target, players: game.players});
   });
   socket.on('left', () => {
+    if(game.collisionCheck(game.players[socket.id], game.target)){
+      game.players[socket.id].points += 1;
+      game.shuffleTarget(targetImages[Math.floor(Math.random()*targetImages.length)]);
+    }
     if(game.players[socket.id].x < 50){
       game.players[socket.id].x = 450;
     }
