@@ -31,14 +31,23 @@ io.on('connection', (socket) => {
   io.emit('gameUpdate', {target: game.target, players: game.players})
 
   socket.on('up', () => {
+    if(game.players[socket.id].y < 50){
+      game.players[socket.id].y = 450;
+    }
     game.players[socket.id].y -= 20;
     io.emit('gameUpdate', {target: game.target, players: game.players});
   });
   socket.on('down', () => {
+    if(game.players[socket.id].y > 450){
+      game.players[socket.id].y = 50;
+    }
     game.players[socket.id].y += 20;
     io.emit('gameUpdate', {target: game.target, players: game.players});
   });
   socket.on('right', () => {
+    if(game.players[socket.id].x > 450){
+      game.players[socket.id].x = 50;
+    }
     game.players[socket.id].x += 20;
     io.emit('gameUpdate', {target: game.target, players: game.players});
   });
