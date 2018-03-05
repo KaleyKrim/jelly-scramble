@@ -37,6 +37,13 @@ function updateGame(state){
 
   players = state.players;
   target = state.target;
+  let playerArray = Object.keys(state.players).map((key) => {
+    return [key, state.players[key]]
+  });
+  playerArray.forEach((player) => {
+    console.log(player);
+    renderImg(player[1].x, player[1].y, "assets/player2.png");
+  });
   renderImg(state.players[socket.id].x, state.players[socket.id].y, "assets/player.png");
   renderImg(state.target.x, state.target.y, state.target.source);
 }
