@@ -28,6 +28,11 @@ io.on('connection', (socket) => {
 
   io.emit('gameUpdate', {target: game.target, players: game.players})
 
+  socket.on('up', () => {
+    game.players[socket.id].y -= 20;
+    io.emit('gameUpdate', {target: game.target, players: game.players});
+  });
+
   socket.on('disconnect', () => {
     delete game.players[socket.id];
   });
