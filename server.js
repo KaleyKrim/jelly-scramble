@@ -17,7 +17,12 @@ http.listen(PORT, () => {
 io.on('connection', (socket) => {
   console.log(`${socket.id} has connected!`);
 
-  game.shuffleTarget();
-
-  io.emit('gameUpdate', {target: game.target})
+  if (Object.keys(game.players).length === 0) {
+    game.shuffleTarget();
+  }
+  game.players[socket.id] = {
+    x: 250,
+    y: 250
+  }
+  io.emit('gameUpdate', {target: game.target, players: game.players})
 });
