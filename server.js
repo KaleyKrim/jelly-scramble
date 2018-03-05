@@ -8,6 +8,8 @@ const path = require('path');
 
 var game = require('./public/game');
 
+const targetImages = ["assets/watermelon.png", "assets/tomato.png"];
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 http.listen(PORT, () => {
@@ -18,7 +20,7 @@ io.on('connection', (socket) => {
   console.log(`${socket.id} has connected!`);
 
   if (Object.keys(game.players).length === 0) {
-    game.shuffleTarget();
+    game.shuffleTarget(targetImages[Math.floor(Math.random()*targetImages.length)]);
   }
   game.players[socket.id] = {
     x: 250,
@@ -30,6 +32,18 @@ io.on('connection', (socket) => {
 
   socket.on('up', () => {
     game.players[socket.id].y -= 20;
+    io.emit('gameUpdate', {target: game.target, players: game.players});
+  });
+  socket.on('down', () => {
+    game.players[socket.id].y += 20;
+    io.emit('gameUpdate', {target: game.target, players: game.players});
+  });
+  socket.on('right', () => {
+    game.players[socket.id].x += 20;
+    io.emit('gameUpdate', {target: game.target, players: game.players});
+  });
+  socket.on('left', () => {
+    game.players[socket.id].x -= 20;
     io.emit('gameUpdate', {target: game.target, players: game.players});
   });
 

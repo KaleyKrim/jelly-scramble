@@ -6,7 +6,7 @@ function renderImg(xCoord, yCoord, source){
 
   var img = new Image();
   img.onload = function () {
-    ctx.drawImage(img, xCoord, yCoord, 30, 30);
+    ctx.drawImage(img, xCoord, yCoord, 50, 50);
   }
   img.src = source;
 }
@@ -32,10 +32,13 @@ function move(e){
 }
 
 function updateGame(state){
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
   players = state.players;
   target = state.target;
   renderImg(state.players[socket.id].x, state.players[socket.id].y, "assets/player.png");
-  renderImg(state.target.x, state.target.y, "assets/watermelon.png");
+  renderImg(state.target.x, state.target.y, state.target.source);
 }
 
 socket.on('gameUpdate', function(data){

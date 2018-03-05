@@ -4,12 +4,13 @@ var target = {};
 var canvasSize = 500;
 var targetSize = 50;
 
-function shuffleTarget(){
-  var x = Math.floor(Math.random() * (Number(480 - 30) + 30));
-  var y = Math.floor(Math.random() * (Number(480 - 30) + 30));
+function shuffleTarget(imgPath){
+  var x = Math.floor(Math.random() * (Number(480 - 50) + 50));
+  var y = Math.floor(Math.random() * (Number(480 - 50) + 50));
 
   target.x = x;
   target.y = y;
+  target.source = imgPath;
 }
 
 if(!this.navigator){
