@@ -8,7 +8,7 @@ function renderPlayer(){
 
   var img = new Image();
   img.onload = function () {
-    ctx.drawImage(img, 75, 55, 20, 20);
+    ctx.drawImage(img, 75, 55, 30, 30);
   }
   img.src = "assets/player.png";
 
@@ -17,7 +17,7 @@ function renderPlayer(){
 function updateGame(data){
   var target = new Image();
   target.onload = function(){
-    ctx.drawImage(target, data.target.x, data.target.y, 20, 20);
+    ctx.drawImage(target, data.target.x, data.target.y, 30, 30);
   }
   console.log(data);
   target.src = "assets/watermelon.png";
