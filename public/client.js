@@ -10,5 +10,11 @@ function renderPlayer(){
   img.onload = function () {
     ctx.drawImage(img, 75, 55, 20, 20);
   }
-img.src = "assets/player.png";
+  img.src = "assets/player.png";
+
+  var target = new Image();
+  target.onload = function(){
+    ctx.drawImage(target, 60, 30, 20, 20);
+  }
+  target.src = "assets/watermelon.png";
 }
