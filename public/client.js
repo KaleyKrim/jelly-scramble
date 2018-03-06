@@ -2,11 +2,11 @@ var socket = io.connect("localhost:8080");
 var canvas = document.getElementById('game');
 var ctx = canvas.getContext('2d');
 
-function renderImg(xCoord, yCoord, source){
+function renderImg(xCoord, yCoord, source, size){
 
   var img = new Image();
   img.onload = function () {
-    ctx.drawImage(img, xCoord, yCoord, 50, 50);
+    ctx.drawImage(img, xCoord, yCoord, size, size);
   }
   img.src = source;
 }
@@ -41,12 +41,12 @@ function updateGame(state){
   });
   playerArray.forEach((player) => {
     if(player[0] != socket.id){
-      renderImg(player[1].x, player[1].y, player[1].character);
+      renderImg(player[1].x, player[1].y, player[1].character, player[1].size);
     }
   });
 
-  renderImg(state.players[socket.id].x, state.players[socket.id].y, state.players[socket.id].character);
-  renderImg(state.target.x, state.target.y, state.target.source);
+  renderImg(state.players[socket.id].x, state.players[socket.id].y, state.players[socket.id].character, state.players[socket.id].size);
+  renderImg(state.target.x, state.target.y, state.target.source, 50);
 }
 
 socket.on('gameUpdate', function(data){

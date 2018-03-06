@@ -26,17 +26,48 @@ function findFreeCharacter(charObj){
   }
 }
 
+function sizeUp(player){
+  if(player.points === 10){
+    player.size += 20;
+  }else if(player.points === 30){
+    player.size += 20;
+  }else if(player.points === 50){
+    player.size += 20;
+  }
+}
+
+function goDown(player){
+  player.y += 20;
+}
+
+function goUp(player){
+  player.y -= 20;
+}
+
+function goLeft(player){
+  player.x -= 20;
+}
+
+function goRight(player){
+  player.x += 20;
+}
+
+function scorePoints(player, target){
+  player.points += target.points;
+}
+
 function shuffleTarget(imgPath){
-  var x = Math.floor(Math.random() * (Number(480 - 50) + 50));
-  var y = Math.floor(Math.random() * (Number(480 - 50) + 50));
+  var x = Math.floor(Math.random() * (Number(480 - targetSize) + targetSize));
+  var y = Math.floor(Math.random() * (Number(480 - targetSize) + targetSize));
 
   target.x = x;
   target.y = y;
   target.source = imgPath;
+  target.points = 1;
 }
 
 function collisionCheck(player, target){
-  return(Math.abs(player.x - target.x) <= playerSize && Math.abs(player.y - target.y) <= playerSize)
+  return(Math.abs(player.x - target.x) <= player.size && Math.abs(player.y - target.y) <= player.size)
 }
 
 if(!this.navigator){
@@ -47,6 +78,12 @@ if(!this.navigator){
     targetSize: targetSize,
     canvasSize: canvasSize,
     shuffleTarget: shuffleTarget,
+    sizeUp: sizeUp,
+    goLeft: goLeft,
+    goRight: goRight,
+    goUp: goUp,
+    goDown: goDown,
+    scorePoints: scorePoints,
     findFreeCharacter: findFreeCharacter,
     collisionCheck: collisionCheck
   }

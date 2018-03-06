@@ -22,65 +22,75 @@ io.on('connection', (socket) => {
   if (Object.keys(game.players).length === 0) {
     game.shuffleTarget(targetImages[Math.floor(Math.random()*targetImages.length)]);
   }
-
   let freeCharacter = game.findFreeCharacter(game.characters);
-  game.characters[freeCharacter] = true;
-  console.log(game.characters);
-
   game.players[socket.id] = {
     x: 250,
     y: 250,
     points: 0,
+    size: 50,
     character: freeCharacter
   };
-
   io.emit('gameUpdate', {target: game.target, players: game.players});
 
   socket.on('up', () => {
 
     if(game.collisionCheck(game.players[socket.id], game.target)){
-      game.players[socket.id].points += 1;
+      game.scorePoints(game.players[socket.id], game.target);
+      game.sizeUp(game.players[socket.id]);
       game.shuffleTarget(targetImages[Math.floor(Math.random()*targetImages.length)]);
     }
     if(game.players[socket.id].y < 50){
       game.players[socket.id].y = 450;
     }
-    game.players[socket.id].y -= 20;
+    game.goUp(game.players[socket.id]);
+
     io.emit('gameUpdate', {target: game.target, players: game.players});
   });
   socket.on('down', () => {
    if(game.collisionCheck(game.players[socket.id], game.target)){
-      game.players[socket.id].points += 1;
+      game.scorePoints(game.players[socket.id], game.target);
+      game.sizeUp(game.players[socket.id]);
       game.shuffleTarget(targetImages[Math.floor(Math.random()*targetImages.length)]);
     }
 
     if(game.players[socket.id].y > 450){
       game.players[socket.id].y = 50;
     }
-    game.players[socket.id].y += 20;
+
+    game.goDown(game.players[socket.id]);
+
     io.emit('gameUpdate', {target: game.target, players: game.players});
   });
+
   socket.on('right', () => {
     if(game.collisionCheck(game.players[socket.id], game.target)){
-      game.players[socket.id].points += 1;
+      game.scorePoints(game.players[socket.id], game.target);
+      game.sizeUp(game.players[socket.id]);
       game.shuffleTarget(targetImages[Math.floor(Math.random()*targetImages.length)]);
     }
 
     if(game.players[socket.id].x > 450){
       game.players[socket.id].x = 50;
     }
-    game.players[socket.id].x += 20;
+
+    game.goRight(game.players[socket.id]);
+
     io.emit('gameUpdate', {target: game.target, players: game.players});
   });
+
   socket.on('left', () => {
+
     if(game.collisionCheck(game.players[socket.id], game.target)){
-      game.players[socket.id].points += 1;
+      game.scorePoints(game.players[socket.id], game.target);
+      game.sizeUp(game.players[socket.id]);
       game.shuffleTarget(targetImages[Math.floor(Math.random()*targetImages.length)]);
     }
+
     if(game.players[socket.id].x < 50){
       game.players[socket.id].x = 450;
     }
-    game.players[socket.id].x -= 20;
+    game.goLeft(game.players[socket.id]);
+
     io.emit('gameUpdate', {target: game.target, players: game.players});
   });
 
