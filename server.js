@@ -101,5 +101,6 @@ io.on('connection', (socket) => {
     let userChar = game.players[socket.id].character;
     game.characters[userChar] = false;
     delete game.players[socket.id];
+    io.emit('gameUpdate', {target: game.target, players: game.players});
   });
 });

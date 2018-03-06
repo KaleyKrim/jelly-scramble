@@ -2,6 +2,7 @@ var socket = io.connect("localhost:8080");
 var canvas = document.getElementById('game');
 var ctx = canvas.getContext('2d');
 var playerScoreDivs = document.querySelectorAll('div.player-score');
+var playerImgDivs = document.querySelectorAll('div.player-img');
 
 function renderScores(playerList){
   let playerArr = Object.keys(playerList).map((key) => {
@@ -9,6 +10,7 @@ function renderScores(playerList){
   });
 
   for(let i = 0; i < playerArr.length; i++){
+    playerImgDivs[i].style.backgroundImage = `url(${playerArr[i][1].character})`;
     playerScoreDivs[i].innerHTML = playerArr[i][1].points;
   }
 }
