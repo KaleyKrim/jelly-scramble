@@ -56,14 +56,15 @@ function scorePoints(player, target){
   player.points += target.points;
 }
 
-function shuffleTarget(imgPath){
+function shuffleTarget(targetData){
   var x = Math.floor(Math.random() * (Number(480 - targetSize) + targetSize));
   var y = Math.floor(Math.random() * (Number(480 - targetSize) + targetSize));
 
   target.x = x;
   target.y = y;
-  target.source = imgPath;
-  target.points = 1;
+  target.source = Object.keys(targetData)[0];
+  target.points = targetData[target.source];
+  console.log(target);
 }
 
 function collisionCheck(player, target){

@@ -8,7 +8,7 @@ const path = require('path');
 
 var game = require('./public/game');
 
-const targetImages = ["assets/watermelon.png", "assets/tomato.png"];
+const targets = [{"assets/watermelon.png": 1}, {"assets/tomato.png": 1}];
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -20,7 +20,7 @@ io.on('connection', (socket) => {
   console.log(`${socket.id} has connected!`);
 
   if (Object.keys(game.players).length === 0) {
-    game.shuffleTarget(targetImages[Math.floor(Math.random()*targetImages.length)]);
+    game.shuffleTarget(targets[Math.floor(Math.random()*targets.length)]);
   }
   let freeCharacter = game.findFreeCharacter(game.characters);
   game.players[socket.id] = {
@@ -37,20 +37,23 @@ io.on('connection', (socket) => {
     if(game.collisionCheck(game.players[socket.id], game.target)){
       game.scorePoints(game.players[socket.id], game.target);
       game.sizeUp(game.players[socket.id]);
-      game.shuffleTarget(targetImages[Math.floor(Math.random()*targetImages.length)]);
+      game.shuffleTarget(targets[Math.floor(Math.random()*targets.length)]);
     }
+
     if(game.players[socket.id].y < 50){
       game.players[socket.id].y = 450;
     }
+
     game.goUp(game.players[socket.id]);
 
     io.emit('gameUpdate', {target: game.target, players: game.players});
   });
+
   socket.on('down', () => {
    if(game.collisionCheck(game.players[socket.id], game.target)){
       game.scorePoints(game.players[socket.id], game.target);
       game.sizeUp(game.players[socket.id]);
-      game.shuffleTarget(targetImages[Math.floor(Math.random()*targetImages.length)]);
+      game.shuffleTarget(targets[Math.floor(Math.random()*targets.length)]);
     }
 
     if(game.players[socket.id].y > 450){
@@ -66,7 +69,7 @@ io.on('connection', (socket) => {
     if(game.collisionCheck(game.players[socket.id], game.target)){
       game.scorePoints(game.players[socket.id], game.target);
       game.sizeUp(game.players[socket.id]);
-      game.shuffleTarget(targetImages[Math.floor(Math.random()*targetImages.length)]);
+      game.shuffleTarget(targets[Math.floor(Math.random()*targets.length)]);
     }
 
     if(game.players[socket.id].x > 450){
@@ -79,16 +82,16 @@ io.on('connection', (socket) => {
   });
 
   socket.on('left', () => {
-
     if(game.collisionCheck(game.players[socket.id], game.target)){
       game.scorePoints(game.players[socket.id], game.target);
       game.sizeUp(game.players[socket.id]);
-      game.shuffleTarget(targetImages[Math.floor(Math.random()*targetImages.length)]);
+      game.shuffleTarget(targets[Math.floor(Math.random()*targets.length)]);
     }
 
     if(game.players[socket.id].x < 50){
       game.players[socket.id].x = 450;
     }
+
     game.goLeft(game.players[socket.id]);
 
     io.emit('gameUpdate', {target: game.target, players: game.players});
