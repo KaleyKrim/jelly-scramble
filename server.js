@@ -16,6 +16,7 @@ http.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
 
+
 io.on('connection', (socket) => {
   console.log(`${socket.id} has connected!`);
 
@@ -23,22 +24,14 @@ io.on('connection', (socket) => {
     game.shuffleTarget(targets[Math.floor(Math.random()*targets.length)]);
   }
   let freeCharacter = game.findFreeCharacter(game.characters);
-  game.players[socket.id] = {
-    x: 250,
-    y: 250,
-    points: 0,
-    size: 50,
-    character: freeCharacter
-  };
+
+  game.players[socket.id] = game.makeNewCharacter(freeCharacter);
+
   io.emit('gameUpdate', {target: game.target, players: game.players});
 
   socket.on('up', () => {
 
-    if(game.collisionCheck(game.players[socket.id], game.target)){
-      game.scorePoints(game.players[socket.id], game.target);
-      game.sizeUp(game.players[socket.id]);
-      game.shuffleTarget(targets[Math.floor(Math.random()*targets.length)]);
-    }
+    game.gameStateUpdates(game, socket, targets);
 
     if(game.players[socket.id].y < 50){
       game.players[socket.id].y = 450;
@@ -50,11 +43,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('down', () => {
-   if(game.collisionCheck(game.players[socket.id], game.target)){
-      game.scorePoints(game.players[socket.id], game.target);
-      game.sizeUp(game.players[socket.id]);
-      game.shuffleTarget(targets[Math.floor(Math.random()*targets.length)]);
-    }
+   game.gameStateUpdates(game, socket, targets);
 
     if(game.players[socket.id].y > 450){
       game.players[socket.id].y = 50;
@@ -66,11 +55,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('right', () => {
-    if(game.collisionCheck(game.players[socket.id], game.target)){
-      game.scorePoints(game.players[socket.id], game.target);
-      game.sizeUp(game.players[socket.id]);
-      game.shuffleTarget(targets[Math.floor(Math.random()*targets.length)]);
-    }
+    game.gameStateUpdates(game, socket, targets);
 
     if(game.players[socket.id].x > 450){
       game.players[socket.id].x = 50;
@@ -82,11 +67,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('left', () => {
-    if(game.collisionCheck(game.players[socket.id], game.target)){
-      game.scorePoints(game.players[socket.id], game.target);
-      game.sizeUp(game.players[socket.id]);
-      game.shuffleTarget(targets[Math.floor(Math.random()*targets.length)]);
-    }
+    game.gameStateUpdates(game, socket, targets);
 
     if(game.players[socket.id].x < 50){
       game.players[socket.id].x = 450;

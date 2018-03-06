@@ -67,6 +67,26 @@ function shuffleTarget(targetData){
   console.log(target);
 }
 
+function gameStateUpdates(game, socket, targets){
+  if(game.collisionCheck(game.players[socket.id], game.target)){
+    game.scorePoints(game.players[socket.id], game.target);
+    game.sizeUp(game.players[socket.id]);
+    game.shuffleTarget(targets[Math.floor(Math.random()*targets.length)]);
+  }
+}
+
+function makeNewCharacter(freeCharacter){
+  let newChar = {
+    x: 250,
+    y: 250,
+    points: 0,
+    size: 50,
+    character: freeCharacter
+  };
+
+  return newChar;
+}
+
 function collisionCheck(player, target){
   return(Math.abs(player.x - target.x) <= player.size && Math.abs(player.y - target.y) <= player.size)
 }
@@ -86,6 +106,8 @@ if(!this.navigator){
     goDown: goDown,
     scorePoints: scorePoints,
     findFreeCharacter: findFreeCharacter,
-    collisionCheck: collisionCheck
+    collisionCheck: collisionCheck,
+    gameStateUpdates: gameStateUpdates,
+    makeNewCharacter: makeNewCharacter
   }
 }
