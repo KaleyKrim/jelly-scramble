@@ -8,6 +8,10 @@ function renderScores(playerList){
   let playerArr = Object.keys(playerList).map((key) => {
     return [key, playerList[key]]
   });
+  for(let i = 0; i < playerImgDivs.length; i++){
+    playerImgDivs[i].style.backgroundImage = null;
+    playerScoreDivs[i].innerHTML = null;
+  }
 
   for(let i = 0; i < playerArr.length; i++){
     playerImgDivs[i].style.backgroundImage = `url(${playerArr[i][1].character})`;

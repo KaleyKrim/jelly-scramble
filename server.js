@@ -24,9 +24,7 @@ io.on('connection', (socket) => {
     game.shuffleTarget(targets[Math.floor(Math.random()*targets.length)]);
   }
   let freeCharacter = game.findFreeCharacter(game.characters);
-
   game.players[socket.id] = game.makeNewCharacter(freeCharacter);
-
   io.emit('gameUpdate', {target: game.target, players: game.players});
 
   socket.on('up', () => {
