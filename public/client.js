@@ -41,11 +41,11 @@ function updateGame(state){
   });
   playerArray.forEach((player) => {
     if(player[0] != socket.id){
-      renderImg(player[1].x, player[1].y, "assets/player2.png");
+      renderImg(player[1].x, player[1].y, player[1].character);
     }
   });
 
-  renderImg(state.players[socket.id].x, state.players[socket.id].y, "assets/player.png");
+  renderImg(state.players[socket.id].x, state.players[socket.id].y, state.players[socket.id].character);
   renderImg(state.target.x, state.target.y, state.target.source);
 }
 

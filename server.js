@@ -22,13 +22,19 @@ io.on('connection', (socket) => {
   if (Object.keys(game.players).length === 0) {
     game.shuffleTarget(targetImages[Math.floor(Math.random()*targetImages.length)]);
   }
+
+  let freeCharacter = game.findFreeCharacter(game.characters);
+  game.characters[freeCharacter] = true;
+  console.log(game.characters);
+
   game.players[socket.id] = {
     x: 250,
     y: 250,
-    points: 0
+    points: 0,
+    character: freeCharacter
   };
 
-  io.emit('gameUpdate', {target: game.target, players: game.players})
+  io.emit('gameUpdate', {target: game.target, players: game.players});
 
   socket.on('up', () => {
 
