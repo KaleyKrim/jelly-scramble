@@ -1,6 +1,17 @@
 var socket = io.connect("localhost:8080");
 var canvas = document.getElementById('game');
 var ctx = canvas.getContext('2d');
+var playerScoreDivs = document.querySelectorAll('div.player-score');
+
+function renderScores(playerList){
+  let playerArr = Object.keys(playerList).map((key) => {
+    return [key, playerList[key]]
+  });
+
+  for(let i = 0; i < playerArr.length; i++){
+    playerScoreDivs[i].innerHTML = playerArr[i][1].points;
+  }
+}
 
 function renderImg(xCoord, yCoord, source, size){
 
@@ -36,6 +47,7 @@ function updateGame(state){
 
   players = state.players;
   target = state.target;
+
   let playerArray = Object.keys(state.players).map((key) => {
     return [key, state.players[key]]
   });
@@ -44,6 +56,8 @@ function updateGame(state){
       renderImg(player[1].x, player[1].y, player[1].character, player[1].size);
     }
   });
+
+  renderScores(players);
 
   renderImg(state.players[socket.id].x, state.players[socket.id].y, state.players[socket.id].character, state.players[socket.id].size);
   renderImg(state.target.x, state.target.y, state.target.source, 50);
