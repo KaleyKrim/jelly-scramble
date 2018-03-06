@@ -6,10 +6,10 @@ var targetSize = 50;
 var playerSize = 50;
 
 var characters = {
-  "assets/player.png":false,
   "assets/player2.png":false,
   "assets/player3.png":false,
   "assets/player4.png":false,
+  "assets/player.png":false,
   "assets/player5.png":false,
   "assets/player6.png":false,
   "assets/player7.png":false,
