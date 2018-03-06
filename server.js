@@ -85,6 +85,8 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
+    let userChar = game.players[socket.id].character;
+    game.characters[userChar] = false;
     delete game.players[socket.id];
   });
 });
