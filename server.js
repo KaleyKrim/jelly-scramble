@@ -32,7 +32,7 @@ io.on('connection', (socket) => {
     game.gameStateUpdates(game, socket, targets);
 
     if(game.players[socket.id].y < 50){
-      game.players[socket.id].y = 450;
+      game.players[socket.id].y = 480;
     }
 
     game.goUp(game.players[socket.id]);
@@ -44,7 +44,7 @@ io.on('connection', (socket) => {
    game.gameStateUpdates(game, socket, targets);
 
     if(game.players[socket.id].y > 450){
-      game.players[socket.id].y = 50;
+      game.players[socket.id].y = 20;
     }
 
     game.goDown(game.players[socket.id]);
@@ -56,7 +56,7 @@ io.on('connection', (socket) => {
     game.gameStateUpdates(game, socket, targets);
 
     if(game.players[socket.id].x > 450){
-      game.players[socket.id].x = 50;
+      game.players[socket.id].x = 20;
     }
 
     game.goRight(game.players[socket.id]);
@@ -68,7 +68,7 @@ io.on('connection', (socket) => {
     game.gameStateUpdates(game, socket, targets);
 
     if(game.players[socket.id].x < 50){
-      game.players[socket.id].x = 450;
+      game.players[socket.id].x = 480;
     }
 
     game.goLeft(game.players[socket.id]);

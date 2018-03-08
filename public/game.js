@@ -33,6 +33,8 @@ function sizeUp(player){
     player.size += 20;
   }else if(player.points === 50){
     player.size += 20;
+  }else if(player.points === 60){
+    player.size += 20;
   }
 }
 
@@ -57,8 +59,8 @@ function scorePoints(player, target){
 }
 
 function shuffleTarget(targetData){
-  var x = Math.floor(Math.random() * (Number(480 - targetSize) + targetSize));
-  var y = Math.floor(Math.random() * (Number(480 - targetSize) + targetSize));
+  var x = Math.floor(Math.random() * (Number(460 - targetSize) + targetSize));
+  var y = Math.floor(Math.random() * (Number(460 - targetSize) + targetSize));
 
   target.x = x;
   target.y = y;

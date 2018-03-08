@@ -1,4 +1,4 @@
-var socket = io.connect("localhost:8080");
+var socket = io.connect("http://192.168.0.2:8080");
 var canvas = document.getElementById('game');
 var ctx = canvas.getContext('2d');
 var playerScoreDivs = document.querySelectorAll('div.player-score');
@@ -6,7 +6,7 @@ var playerImgDivs = document.querySelectorAll('div.player-img');
 
 function renderScores(playerList){
   let playerArr = Object.keys(playerList).map((key) => {
-    return [key, playerList[key]]
+    return [key, playerList[key]];
   });
   for(let i = 0; i < playerImgDivs.length; i++){
     playerImgDivs[i].style.backgroundImage = null;
@@ -72,5 +72,3 @@ function updateGame(state){
 socket.on('gameUpdate', function(data){
   updateGame(data);
 });
-
-// setInterval(updateGame({players: players, target: target}), 20);
