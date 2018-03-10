@@ -8,7 +8,7 @@ const path = require('path');
 
 var game = require('./public/game');
 
-const targets = [{"assets/watermelon.png": 2}, {"assets/tomato.png": 1}, {"assets/tomato2.png": 1}, {"assets/tomato3.png": 1}];
+const targets = [{source: "assets/watermelon.png", points: 2}, {source: "assets/tomato.png", points: 1}, {source: "assets/tomato2.png", points: 0, special: 1}, {source: "assets/tomato3.png", points: 1}];
 
 app.use(express.static(path.join(__dirname, 'public')));
 

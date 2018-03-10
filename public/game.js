@@ -55,7 +55,11 @@ function goRight(player){
 }
 
 function scorePoints(player, target){
-  player.points += target.points;
+  if(!target.special){
+    player.points += target.points;
+  }else{
+    player.speed += target.special;
+  }
 }
 
 function shuffleTarget(targetData){
@@ -64,8 +68,13 @@ function shuffleTarget(targetData){
 
   target.x = x;
   target.y = y;
-  target.source = Object.keys(targetData)[0];
-  target.points = targetData[target.source];
+  target.source = targetData.source;
+  target.points = targetData.points;
+  if(targetData.special){
+    target.special = targetData.special;
+  }else{
+    target.special = null;
+  }
   console.log(target);
 }
 
