@@ -39,19 +39,19 @@ function sizeUp(player){
 }
 
 function goDown(player){
-  player.y += 20;
+  player.y += player.speed;
 }
 
 function goUp(player){
-  player.y -= 20;
+  player.y -= player.speed;
 }
 
 function goLeft(player){
-  player.x -= 20;
+  player.x -= player.speed;
 }
 
 function goRight(player){
-  player.x += 20;
+  player.x += player.speed;
 }
 
 function scorePoints(player, target){
@@ -83,14 +83,15 @@ function makeNewCharacter(freeCharacter){
     y: 250,
     points: 0,
     size: 50,
-    character: freeCharacter
+    character: freeCharacter,
+    speed: 20
   };
 
   return newChar;
 }
 
 function collisionCheck(player, target){
-  return(Math.abs(player.x - target.x) <= player.size && Math.abs(player.y - target.y) <= player.size)
+  return(Math.abs(player.x - target.x) <= player.size && Math.abs(player.y - target.y) <= player.size);
 }
 
 if(!this.navigator){
