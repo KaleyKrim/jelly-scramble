@@ -6,14 +6,14 @@ var targetSize = 50;
 var playerSize = 50;
 
 var characters = {
-  "assets/player2.png":false,
-  "assets/player3.png":false,
-  "assets/player4.png":false,
-  "assets/player.png":false,
-  "assets/player5.png":false,
-  "assets/player6.png":false,
-  "assets/player7.png":false,
-  "assets/player8.png":false
+  "game-assets/players/player2.png":false,
+  "game-assets/players/player3.png":false,
+  "game-assets/players/player4.png":false,
+  "game-assets/players/player.png":false,
+  "game-assets/players/player5.png":false,
+  "game-assets/players/player6.png":false,
+  "game-assets/players/player7.png":false,
+  "game-assets/players/player8.png":false
 };
 
 function findFreeCharacter(charObj){
