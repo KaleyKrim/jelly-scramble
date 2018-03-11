@@ -8,7 +8,7 @@ const path = require('path');
 
 var game = require('./public/game');
 
-const targets = [{source: "assets/watermelon.png", points: 2}, {source: "assets/tomato.png", points: 1}, {source: "assets/tomato2.png", points: 0, special: 1}, {source: "assets/tomato3.png", points: 1}];
+const targets = [{source: "assets/watermelon.png", points: 2}, {source: "assets/tomato.png", points: 1}, {source: "assets/tomato2.png", points: 0, special: 2}, {source: "assets/tomato3.png", points: 1}];
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -28,51 +28,30 @@ io.on('connection', (socket) => {
   io.emit('gameUpdate', {target: game.target, players: game.players});
 
   socket.on('up', () => {
-
     game.gameStateUpdates(game, socket, targets);
-
-    if(game.players[socket.id].y < 50){
-      game.players[socket.id].y = 480;
-    }
-
+    game.infiniteUp(game.players[socket.id]);
     game.goUp(game.players[socket.id]);
-
     io.emit('gameUpdate', {target: game.target, players: game.players});
   });
 
   socket.on('down', () => {
-   game.gameStateUpdates(game, socket, targets);
-
-    if(game.players[socket.id].y > 450){
-      game.players[socket.id].y = 20;
-    }
-
+    game.gameStateUpdates(game, socket, targets);
+    game.infiniteDown(game.players[socket.id]);
     game.goDown(game.players[socket.id]);
-
     io.emit('gameUpdate', {target: game.target, players: game.players});
   });
 
   socket.on('right', () => {
     game.gameStateUpdates(game, socket, targets);
-
-    if(game.players[socket.id].x > 450){
-      game.players[socket.id].x = 20;
-    }
-
+    game.infiniteRight(game.players[socket.id]);
     game.goRight(game.players[socket.id]);
-
     io.emit('gameUpdate', {target: game.target, players: game.players});
   });
 
   socket.on('left', () => {
     game.gameStateUpdates(game, socket, targets);
-
-    if(game.players[socket.id].x < 50){
-      game.players[socket.id].x = 480;
-    }
-
+    game.infiniteLeft(game.players[socket.id]);
     game.goLeft(game.players[socket.id]);
-
     io.emit('gameUpdate', {target: game.target, players: game.players});
   });
 

@@ -54,6 +54,30 @@ function goRight(player){
   player.x += player.speed;
 }
 
+function infiniteUp(player){
+  if(player.y < 50){
+    player.y = 480;
+  }
+}
+
+function infiniteDown(player){
+  if(player.y > 450){
+    player.y = 20;
+  }
+}
+
+function infiniteRight(player){
+  if(player.x > 450){
+    player.x = 20;
+  }
+}
+
+function infiniteLeft(player){
+  if(player.x < 50){
+    player.x = 480;
+  }
+}
+
 function scorePoints(player, target){
   if(!target.special){
     player.points += target.points;
@@ -116,10 +140,14 @@ if(!this.navigator){
     goRight: goRight,
     goUp: goUp,
     goDown: goDown,
+    infiniteUp: infiniteUp,
+    infiniteDown: infiniteDown,
+    infiniteRight: infiniteRight,
+    infiniteLeft: infiniteLeft,
     scorePoints: scorePoints,
     findFreeCharacter: findFreeCharacter,
     collisionCheck: collisionCheck,
     gameStateUpdates: gameStateUpdates,
     makeNewCharacter: makeNewCharacter
-  }
+  };
 }
