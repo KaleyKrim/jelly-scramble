@@ -9,7 +9,7 @@ const jelly = io
 
 const path = require('path');
 
-var game = require('./public/game');
+var game = require('./public/js/game');
 
 const targetPath = "game-assets/targets/";
 
