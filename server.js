@@ -4,6 +4,9 @@ const PORT = process.env.port || 8080;
 const http = require('http').Server(app);
 
 const io = require('socket.io')(http);
+const jelly = io
+  .of('/jelly');
+
 const path = require('path');
 
 var game = require('./public/game');
@@ -17,7 +20,7 @@ http.listen(PORT, () => {
 });
 
 
-io.on('connection', (socket) => {
+jelly.on('connection', (socket) => {
   console.log(`${socket.id} has connected!`);
 
   if (Object.keys(game.players).length === 0) {
@@ -25,40 +28,40 @@ io.on('connection', (socket) => {
   }
   let freeCharacter = game.findFreeCharacter(game.characters);
   game.players[socket.id] = game.makeNewCharacter(freeCharacter);
-  io.emit('gameUpdate', {target: game.target, players: game.players});
+  jelly.emit('gameUpdate', {target: game.target, players: game.players});
 
   socket.on('up', () => {
     game.gameStateUpdates(game, socket, targets);
     game.infiniteUp(game.players[socket.id]);
     game.goUp(game.players[socket.id]);
-    io.emit('gameUpdate', {target: game.target, players: game.players});
+    jelly.emit('gameUpdate', {target: game.target, players: game.players});
   });
 
   socket.on('down', () => {
     game.gameStateUpdates(game, socket, targets);
     game.infiniteDown(game.players[socket.id]);
     game.goDown(game.players[socket.id]);
-    io.emit('gameUpdate', {target: game.target, players: game.players});
+    jelly.emit('gameUpdate', {target: game.target, players: game.players});
   });
 
   socket.on('right', () => {
     game.gameStateUpdates(game, socket, targets);
     game.infiniteRight(game.players[socket.id]);
     game.goRight(game.players[socket.id]);
-    io.emit('gameUpdate', {target: game.target, players: game.players});
+    jelly.emit('gameUpdate', {target: game.target, players: game.players});
   });
 
   socket.on('left', () => {
     game.gameStateUpdates(game, socket, targets);
     game.infiniteLeft(game.players[socket.id]);
     game.goLeft(game.players[socket.id]);
-    io.emit('gameUpdate', {target: game.target, players: game.players});
+    jelly.emit('gameUpdate', {target: game.target, players: game.players});
   });
 
   socket.on('disconnect', () => {
     let userChar = game.players[socket.id].character;
     game.characters[userChar] = false;
     delete game.players[socket.id];
-    io.emit('gameUpdate', {target: game.target, players: game.players});
+    jelly.emit('gameUpdate', {target: game.target, players: game.players});
   });
 });
